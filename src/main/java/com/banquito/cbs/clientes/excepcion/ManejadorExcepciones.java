@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.banquito.cbs.clientes.dto.ErrorDto;
 
+
 @RestControllerAdvice
 public class ManejadorExcepciones {
     @ExceptionHandler(EntidadNoEncontradaException.class)

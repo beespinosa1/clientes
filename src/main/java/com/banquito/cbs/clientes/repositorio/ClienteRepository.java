@@ -1,5 +1,9 @@
 package com.banquito.cbs.clientes.repositorio;
 
-public interface ClienteRepository {
+import com.banquito.cbs.clientes.modelo.Cliente;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
+public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 }
