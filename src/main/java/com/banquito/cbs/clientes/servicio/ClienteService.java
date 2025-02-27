@@ -4,6 +4,8 @@ import com.banquito.cbs.clientes.modelo.Cliente;
 import com.banquito.cbs.clientes.repositorio.ClienteRepository;
 import com.banquito.cbs.clientes.excepcion.EntidadNoEncontradaException;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -16,6 +18,8 @@ public class ClienteService {
     }
     
     public Cliente crear(Cliente cliente) {
+        cliente.setFechaCreacion(LocalDateTime.now());
+        cliente.setFechaActualizacion(LocalDateTime.now());
         return clienteRepository.save(cliente);
     }
     

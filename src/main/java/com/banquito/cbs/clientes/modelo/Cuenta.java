@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,14 +27,14 @@ public class Cuenta {
     @Column(name = "ID",nullable = false)
     private Integer id;
 
-    //Es una llave foránea
-    @Column(name = "ID_CLIENTE", nullable = false)
-    private Integer idCliente;
+    @ManyToOne
+    @JoinColumn(name = "ID_CLIENTE", nullable = false)
+    private Cliente cliente;
 
     @Column(name = "TIPO",length = 3, nullable = false)
     private String tipo;
 
-    @Column(name = "NUMERO",length = 20, nullable = false)
+    @Column(name = "NUMERO",length = 13, nullable = false)
     private String numero;
 
     @Column(name = "SALDO_TOTAL", precision = 20, scale = 2, nullable = false)

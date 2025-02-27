@@ -23,7 +23,7 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID",nullable = false)
+    @Column(name = "ID",nullable = true)
     private Integer id;
 
     @Column(name = "TIPO_CLIENTE",length = 3, nullable = false)
@@ -56,10 +56,10 @@ public class Cliente {
     @Column (name = "TIPO_COMERCIO", length = 20, nullable = true)
     private String tipoComercio;
 
-    @Column (name = "FECHA_CONSTITUCION", nullable = false)
+    @Column (name = "FECHA_CONSTITUCION", nullable = true)
     private LocalDate fechaConstitucion;
     
-    @Column (name = "ESTADO", length = 3, nullable = false)
+    @Column (name = "ESTADO", length = 3, nullable = true)
     private String estado;
 
     @Column (name = "NACIONALIDAD", length = 50, nullable = false)

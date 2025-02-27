@@ -1,45 +1,56 @@
 package com.banquito.cbs.clientes.controlador;
 
 import com.banquito.cbs.clientes.modelo.Cliente;
+import com.banquito.cbs.clientes.dto.ClienteDto;
 import com.banquito.cbs.clientes.servicio.ClienteService;
+import com.banquito.cbs.clientes.controlador.mapper.ClienteMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/clientes")
 public class ClienteController {
 
     private final ClienteService clienteService;
+    private final ClienteMapper clienteMapper;
 
-    public ClienteController(ClienteService clienteService) {
+    public ClienteController(ClienteService clienteService, ClienteMapper clienteMapper) {
         this.clienteService = clienteService;
+        this.clienteMapper = clienteMapper;
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> crearCliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<ClienteDto> crearCliente(@Valid @RequestBody ClienteDto clienteDto) {
+        Cliente cliente = clienteMapper.toModel(clienteDto);
         Cliente nuevoCliente = clienteService.crear(cliente);
-        return new ResponseEntity<>(nuevoCliente, HttpStatus.CREATED);
+        return new ResponseEntity<>(clienteMapper.toDto(nuevoCliente), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> obtenerCliente(@PathVariable Integer id) {
+    public ResponseEntity<ClienteDto> obtenerCliente(@PathVariable Integer id) {
         Cliente cliente = clienteService.obtenerPorId(id);
-        return ResponseEntity.ok(cliente);
+        return ResponseEntity.ok(clienteMapper.toDto(cliente));
     }
 
     @GetMapping
-    public ResponseEntity<List<Cliente>> listarClientes() {
+    public ResponseEntity<List<ClienteDto>> listarClientes() {
         List<Cliente> clientes = clienteService.listarTodos();
-        return ResponseEntity.ok(clientes);
+        List<ClienteDto> clientesDto = clientes.stream()
+                .map(clienteMapper::toDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(clientesDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> actualizarCliente(@PathVariable Integer id, @RequestBody Cliente cliente) {
+    public ResponseEntity<ClienteDto> actualizarCliente(@PathVariable Integer id, @Valid @RequestBody ClienteDto clienteDto) {
+        Cliente cliente = clienteMapper.toModel(clienteDto);
         Cliente clienteActualizado = clienteService.actualizar(id, cliente);
-        return ResponseEntity.ok(clienteActualizado);
+        return ResponseEntity.ok(clienteMapper.toDto(clienteActualizado));
     }
 
     @DeleteMapping("/{id}")
