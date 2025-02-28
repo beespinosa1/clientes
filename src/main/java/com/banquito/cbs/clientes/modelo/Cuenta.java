@@ -24,17 +24,20 @@ public class Cuenta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID",nullable = false)
+    @Column(name = "ID", nullable = false)
     private Integer id;
 
+    @Column(name = "ID_CLIENTE", nullable = false)
+    private Integer idCliente;
+
     @ManyToOne
-    @JoinColumn(name = "ID_CLIENTE", nullable = false)
+    @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID", insertable = false, updatable = false)
     private Cliente cliente;
 
-    @Column(name = "TIPO",length = 3, nullable = false)
+    @Column(name = "TIPO", length = 3, nullable = false)
     private String tipo;
 
-    @Column(name = "NUMERO",length = 13, nullable = false)
+    @Column(name = "NUMERO", length = 13, nullable = false)
     private String numero;
 
     @Column(name = "SALDO_TOTAL", precision = 20, scale = 2, nullable = false)
@@ -46,11 +49,9 @@ public class Cuenta {
     @Column(name = "SALDO_ACREDITAR", precision = 20, scale = 2, nullable = false)
     private BigDecimal saldoAcreditar;
 
-    @Column(name = "ESTADO",length = 3, nullable = false)
+    @Column(name = "ESTADO", length = 3, nullable = false)
     private String estado;
 
     @Column(name = "FECHA_CREACION", nullable = false)
     private LocalDateTime fechaCreacion;
-
-
 }

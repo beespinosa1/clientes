@@ -48,19 +48,18 @@ public class CuentaService {
                 .orElseThrow(() -> new EntidadNoEncontradaException("Cuenta no encontrada con número: " + numeroCuenta));
     }
 
-    public void crearCuenta(Cuenta cuenta, BigDecimal depositoInicial) {
+    public Cuenta crearCuenta(Cuenta cuenta) {
         if (!cuenta.getTipo().equals(TIPO_AHORROS) && !cuenta.getTipo().equals(TIPO_CORRIENTE)) {
             throw new OperacionInvalidaException("Tipo de cuenta no válido");
         }
-
+        
         cuenta.setNumero(this.generarNuevoNumeroCuenta());
         cuenta.setSaldoAcreditar(BigDecimal.ZERO);
-        cuenta.setSaldoDisponible(BigDecimal.ZERO);
         cuenta.setEstado(ESTADO_ACTIVA);
         cuenta.setFechaCreacion(LocalDateTime.now(ZoneId.systemDefault()));
 
         this.actualizarTotalCuenta(cuenta);
-        cuentaRepository.save(cuenta);
+        return cuentaRepository.save(cuenta);
     }
 
     public void depositarValores(Cuenta cuenta, BigDecimal valor) {
