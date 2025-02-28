@@ -86,17 +86,7 @@ public class ClienteController {
         return ResponseEntity.ok(clienteMapper.toDto(clienteActualizado));
     }
 
-    @Operation(summary = "Eliminar cliente", description = "Elimina un cliente del sistema")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Cliente eliminado exitosamente"),
-        @ApiResponse(responseCode = "404", description = "Cliente no encontrado"),
-        @ApiResponse(responseCode = "400", description = "No se puede eliminar el cliente porque tiene cuentas asociadas")
-    })
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarCliente(
-            @Parameter(description = "ID del cliente a eliminar", required = true)
-            @PathVariable Integer id) {
-        clienteService.eliminar(id);
-        return ResponseEntity.noContent().build();
-    }
+   
+
+
 }
